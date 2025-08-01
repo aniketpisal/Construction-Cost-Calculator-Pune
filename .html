@@ -1,0 +1,117 @@
+<div class="calculator-wrapper">
+  <h2>🏗️ Construction Cost Calculator – Pune</h2>
+
+  <label for="area">Built-up Area (in sq.ft)</label>
+  <input type="number" id="area" placeholder="Enter area in sq.ft">
+
+  <label for="type">Construction Type</label>
+  <select id="type">
+    <option value="basic">Basic – ₹1,400/sq.ft</option>
+    <option value="standard">Standard – ₹1,700/sq.ft</option>
+    <option value="premium">Premium – ₹2,100/sq.ft</option>
+  </select>
+
+  <label for="floor">Number of Floors</label>
+  <input type="number" id="floor" value="1" min="1">
+
+  <button onclick="calculateCost()">Calculate Cost</button>
+
+  <div id="result"></div>
+  <div id="note"></div>
+</div>
+
+<style>
+  .calculator-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .calculator-wrapper h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #222;
+    text-align: center;
+  }
+
+  #note {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .calculator-wrapper {
+      padding: 15px;
+    }
+
+    input, select, button {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<script>
+  function calculateCost() {
+    const area = parseFloat(document.getElementById("area").value);
+    const type = document.getElementById("type").value;
+    const floors = parseInt(document.getElementById("floor").value);
+
+    let ratePerSqFt = 0;
+    switch (type) {
+      case "basic": ratePerSqFt = 1400; break;
+      case "standard": ratePerSqFt = 1700; break;
+      case "premium": ratePerSqFt = 2100; break;
+    }
+
+    if (isNaN(area) || isNaN(floors) || area <= 0 || floors <= 0) {
+      document.getElementById("result").innerText = "❌ Please enter valid inputs.";
+      document.getElementById("note").innerText = "";
+      return;
+    }
+
+    const total = area * ratePerSqFt * floors;
+    document.getElementById("result").innerText = `✅ Estimated Construction Cost: ₹${total.toLocaleString()}`;
+    document.getElementById("note").innerText = "Note: This is a rough estimate. Actual cost may vary based on material quality, labour, and site conditions.";
+    document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+  }
+</script>
